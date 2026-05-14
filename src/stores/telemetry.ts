@@ -19,24 +19,21 @@ export const useTelemetryStore = defineStore('telemetry', () => {
   const MAX_LOGS = 100;
 
   // --- Core Logic ---
-  const processNewData = () => {
-    const newData = generateTick();
-
-    cpuHistory.value.push(newData.cpu);
-    memoryHistory.value.push(newData.memory);
-    networkHistory.value.push(newData.network);
-
-    if (newData.newLog) {
-      logs.value.unshift(newData.newLog); // Put newest logs at the top
-    }
-
-    // PERFORMANCE OPTIMIZATION: Prevent memory leaks by truncating arrays
-    if (cpuHistory.value.length > MAX_DATA_POINTS) cpuHistory.value.shift();
-    if (memoryHistory.value.length > MAX_DATA_POINTS) memoryHistory.value.shift();
-    if (networkHistory.value.length > MAX_DATA_POINTS) networkHistory.value.shift();
-    if (logs.value.length > MAX_LOGS) logs.value.pop();
-  };
-
+  // --- Core Logic ---
+    const processNewData = () => {
+      const newData = generateTick();
+  
+      // Create fresh array references and slice them immediately to prevent memory leaks.
+      // This perfectly triggers Vue's and TanStack's reactivity engines.
+      cpuHistory.value = [...cpuHistory.value, newData.cpu].slice(-MAX_DATA_POINTS);
+      memoryHistory.value = [...memoryHistory.value, newData.memory].slice(-MAX_DATA_POINTS);
+      networkHistory.value = [...networkHistory.value, newData.network].slice(-MAX_DATA_POINTS);
+  
+      if (newData.newLog) {
+        // Put the new log at the front, keep the rest, and slice to the max limit
+        logs.value = [newData.newLog, ...logs.value].slice(0, MAX_LOGS);
+      }
+    };
   // --- Actions ---
   const startStream = () => {
     if (isStreaming.value) return; // Prevent multiple intervals

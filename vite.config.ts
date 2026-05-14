@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/', // <-- CRITICAL FIX: Make sure this is just a slash
+  base: '/',
   plugins: [
     vue(),
     tailwindcss(),

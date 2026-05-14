@@ -2,6 +2,8 @@
 import { onMounted, onUnmounted } from 'vue';
 import { useTelemetryStore } from './stores/telemetry';
 import LineChart from './components/charts/LineChart.vue';
+import ActivityFeed from './components/common/ActivityFeed.vue';
+
 const store = useTelemetryStore();
 
 onMounted(() => {
@@ -19,6 +21,7 @@ onUnmounted(() => {
     <!-- Header -->
     <div class="flex justify-between items-center mb-8">
       <div>
+        
         <h1 class="text-3xl font-bold tracking-tight text-gray-100">System Telemetry</h1>
         <p class="text-gray-400 mt-1">Live monitoring dashboard • Phase 5A</p>
       </div>
@@ -71,7 +74,11 @@ onUnmounted(() => {
         <!-- Render the Network Chart -->
         <LineChart title="Network" color="#c084fc" :data="store.networkHistory" />
       </div>
-
+       
     </div>
+    <!-- The Activity Feed -->
+  <div class="mt-8">
+        <ActivityFeed :data="store.logs" />
+      </div>
   </div>
 </template>

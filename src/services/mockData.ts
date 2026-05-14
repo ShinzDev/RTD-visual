@@ -14,6 +14,7 @@ const generateNextValue = (lastValue: number, min: number, max: number, volatili
 };
 
 // Helper: Generates realistic system logs
+// Helper: Generates realistic system logs
 const generateRandomLog = (): LogEntry => {
   const severities: LogSeverity[] = ['info', 'info', 'success', 'warning', 'critical'];
   const sources = ['AuthServer', 'DB-Cluster-01', 'PaymentGateway', 'CDN-Edge', 'Firewall'];
@@ -29,9 +30,10 @@ const generateRandomLog = (): LogEntry => {
   return {
     id: crypto.randomUUID(),
     timestamp: Date.now(),
-    severity: severities[Math.floor(Math.random() * severities.length)],
-    source: sources[Math.floor(Math.random() * sources.length)],
-    message: messages[Math.floor(Math.random() * messages.length)],
+    // Add fallbacks to satisfy strict TypeScript array indexing rules
+    severity: severities[Math.floor(Math.random() * severities.length)] ?? 'info',
+    source: sources[Math.floor(Math.random() * sources.length)] ?? 'System',
+    message: messages[Math.floor(Math.random() * messages.length)] ?? 'Unknown event',
   };
 };
 

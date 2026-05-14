@@ -23,7 +23,7 @@ onUnmounted(() => {
       <div>
         
         <h1 class="text-3xl font-bold tracking-tight text-gray-100">System Telemetry</h1>
-        <p class="text-gray-400 mt-1">Live monitoring dashboard • Phase 5A</p>
+        <p class="text-gray-400 mt-1">Real-time monitoring dashboard</p>
       </div>
       
       <button 

@@ -81,32 +81,28 @@ const getSeverityClass = (severity: string) => {
         </thead>
 
         <!-- Table Body -->
-        <tbody>
-          <!-- Smooth transition list for new items -->
-          <TransitionGroup name="list">
-            <tr 
-              v-for="row in table.getRowModel().rows" 
-              :key="row.original.id"
-              class="border-b border-gray-700/30 hover:bg-gray-800/50 transition-colors"
-            >
-              <td v-for="cell in row.getVisibleCells()" :key="cell.id" class="px-6 py-3 whitespace-nowrap">
-                
-                <!-- Custom rendering for the Severity column to make it a badge -->
-                <span v-if="cell.column.id === 'severity'" 
-                      class="px-2.5 py-1 rounded-md text-xs font-bold border"
-                      :class="getSeverityClass(cell.getValue() as string)">
-                  {{ cell.getValue() }}
-                </span>
-                
-                <!-- Standard text rendering for all other columns -->
-                <span v-else class="font-mono text-[13px]">
-                  <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-                </span>
-
-              </td>
-            </tr>
-          </TransitionGroup>
-        </tbody>
+        <!-- Table Body -->
+                <tbody>
+                  <tr 
+                    v-for="row in table.getRowModel().rows" 
+                    :key="row.original.id"
+                    class="border-b border-gray-700/30 hover:bg-gray-800/50 transition-colors"
+                  >
+                    <td v-for="cell in row.getVisibleCells()" :key="cell.id" class="px-6 py-3 whitespace-nowrap">
+                      
+                      <span v-if="cell.column.id === 'severity'" 
+                            class="px-2.5 py-1 rounded-md text-xs font-bold border"
+                            :class="getSeverityClass(cell.getValue() as string)">
+                        {{ cell.getValue() }}
+                      </span>
+                      
+                      <span v-else class="font-mono text-[13px]">
+                        <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+                      </span>
+        
+                    </td>
+                  </tr>
+                </tbody>
         
       </table>
       
@@ -118,7 +114,7 @@ const getSeverityClass = (severity: string) => {
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 /* Optional: Adds a smooth slide-in animation when a new log arrives */
 .list-enter-active,
 .list-leave-active {
@@ -144,4 +140,4 @@ const getSeverityClass = (severity: string) => {
   background-color: #334155;
   border-radius: 10px;
 }
-</style>
+</style> -->
